@@ -67,7 +67,7 @@
     border-bottom: 2px solid #eee;
 }
 @media (max-width: 400px) {
-    .side, .middle, .left-review, .right-review {
+    .left-bar, .right-bar, .left-review, .right-review {
         width: 100%;
     }
 }
