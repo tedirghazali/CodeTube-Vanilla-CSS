@@ -1,0 +1,42 @@
+/* Loading */
+.loading {
+    width: 693px; 
+    height: 187px; 
+    display: block;
+        
+    /* optional way, set loading as background */
+    background-image: url('loading.gif');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+/* Basic */
+.container{
+    width:  693px;
+    margin: 30px auto;
+    font-family: helvetica, tahoma, sans-serif;
+}
+.content{
+    margin: 10px 0px;
+    background-color: #fff;
+}
+.content:after{
+    clear: both;
+    display: table;
+    content: " ";
+}
+.content img{
+    width: 200px; 
+    height: 150px; 
+    float: left;
+    padding-right: 10px;
+}
+.content .caption{
+    width: 483px; 
+    height: 187px; 
+    float: left;
+}
+.content .caption h3{
+    padding: 5px 0px;
+    margin: 0;
+}
