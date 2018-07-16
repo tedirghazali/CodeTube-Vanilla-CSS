@@ -25,7 +25,7 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Address</th>
-                                <th width="130">Actions</th>
+                                <th width="150">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +66,7 @@
                             <textarea class="form-control" v-model="input.address"></textarea>
                         </div>
                         <button v-if="savebtn" @click.prevent="save" class="btn btn-primary">Save</button>
-                        <button v-if="updatebtn" @click.prevent="update(input.id)" class="btn btn-primary">Update</button>
+                        <button v-if="updatebtn" @click.prevent="update(input.id)" class="btn btn-warning">Update</button>
                         <button @click.prevent="clear" class="btn btn-info">Clear</button>
                     </form>
                 </div>
@@ -90,7 +90,7 @@
                 updatebtn: false
             },
             created: function () {
-                this.view()
+                this.view();
             },
             methods: {
                 view: function () {
@@ -99,7 +99,12 @@
                         { id: '2', name: 'Bukhari', email: 'bukhari@gmail.com', phone: '0867656668', address: 'Kembang Tanjong' },
                         { id: '3', name: 'Boyhaki', email: 'boyhaki@hotmail.com', phone: '0867656667', address: 'Desa Baroh' },
                         { id: '4', name: 'Zulkifli', email: 'zulkifli@ymail.com', phone: '0867656666', address: 'Desa Beureuleung' },
-                        { id: '5', name: 'Nurjannah', email: 'nurjannah@gmail.com', phone: '0867656669', address: 'Seulimum' }
+                        { id: '5', name: 'Nurjannah', email: 'nurjannah@gmail.com', phone: '0867656669', address: 'Seulimum' },
+                        { id: '6', name: 'Dedi', email: 'dedi@gmail.com', phone: '087676767677', address: 'JL Babah Dua' },
+                        { id: '7', name: 'Maru', email: 'maru@gmail.com', phone: '086754545544', address: 'JL Lorong Blang' },
+                        { id: '8', name: 'Monicha', email: 'monicha@gmail.com', phone: '0867453456', address: 'JL Lorong Blang' },
+                        { id: '9', name: 'Ayub Sami', email: 'ayubsami@gmail.com', phone: '085667895667', address: 'Desa Baroh' },
+                        { id: '10', name: 'Suryani', email: 'suryani@hotmail.com', phone: '086756565656', address: 'Kembang Tanjong' }
                     ]
                 },
                 save: function () {
@@ -112,7 +117,7 @@
                     this.items.push({id: id, name: nm, email: em, phone: pn, address: ad})
                     this.clear()
                     
-                    swal('Added', 'Berhasil tambah data', 'success')
+                    swal('Added', 'Terima kasih telah menambahkan data baru', 'success')
                 },
                 clear: function () {
                     this.savebtn = true
@@ -137,13 +142,13 @@
                     Object.assign(this.items[myid], this.input)
                     this.clear()
                     
-                    swal('Updated', 'Berhasil mengubah data', 'warning')
+                    swal('Updated', 'Terima kasih telah mengubah data', 'warning')
                 },
                 destroy: function (item) {
                     var del = this.items.indexOf(item)
                     swal({
-                        title: 'Deleted',
-                        text: 'Are you sure',
+                        title: 'Delete Item',
+                        text: 'Are you sure?',
                         icon: 'error',
                         buttons: true,
                         dangerMode: true
@@ -154,6 +159,7 @@
                             
                         }
                     })
+                    
                 }
             }
         })
