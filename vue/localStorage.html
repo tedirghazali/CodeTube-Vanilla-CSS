@@ -9,14 +9,12 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js"></script>
 </head>
 <body>
     
     <div id="app">
         <div class="container">
             <p><br/></p>
-            <h1>{{ title }}</h1>
             <div class="row">
                 <div class="col-md-8">
                     <table class="table table-bordered table-striped">
@@ -31,8 +29,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in items" v-bind:key="item._id">
-                                <td>{{ item._id }}</td>
+                            <tr v-for="item in items" v-bind:key="item.id">
+                                <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.email }}</td>
                                 <td>{{ item.phone }}</td>
@@ -49,7 +47,7 @@
                     <form>
                         <div class="form-group">
                             <label>ID</label>
-                            <input type="text" v-model="input._id" class="form-control" />
+                            <input type="text" v-model="input.id" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Name</label>
@@ -68,25 +66,21 @@
                             <textarea class="form-control" v-model="input.address"></textarea>
                         </div>
                         <button v-if="savebtn" @click.prevent="save" class="btn btn-primary">Save</button>
-                        <button v-if="updatebtn" @click.prevent="update(input._id)" class="btn btn-warning">Update</button>
+                        <button v-if="updatebtn" @click.prevent="update(input.id)" class="btn btn-warning">Update</button>
                         <button @click.prevent="clear" class="btn btn-info">Clear</button>
                     </form>
-                    <p><br/></p>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
-        window.db = new PouchDB('test');
-        
         var app = new Vue({
             el: '#app',
             data: {
-                title: 'CRUD Vue.js',
                 items : [],
                 input: {
-                    _id: '',
+                    id: '',
                     name: '',
                     email: '',
                     phone: '',
@@ -96,50 +90,44 @@
                 updatebtn: false
             },
             created: function () {
-                this.view()
+                if(localStorage.getItem('items')){
+                    this.view()
+                    this.localData()
+                    this.items = JSON.parse(localStorage.getItem('items'))
+                }
             },
             methods: {
+                localData: function () {
+                    let parsed = JSON.stringify(this.items)
+                    localStorage.setItem('items', parsed)
+                },
                 view: function () {
-                    let vm = this
-                    db.allDocs({
-                        include_docs: true
-                    }).then(function(response){
-                        for(var i = 0; i < response.rows.length; i++){
-                            vm.items.push(response.rows[i].doc)
-                            console.log(response.rows[i].doc)
-                        }
-                    }).catch(function(error){
-                        console.log(error)
-                    })
+                    this.items = [
+                        { id: '1', name: 'Tedir Ghazali', email: 'tedirghazali@gmail.com', phone: '08675554666', address: 'Jl Babah Dua'},
+                        { id: '2', name: 'Bukhari', email: 'bukhari@gmail.com', phone: '0867656668', address: 'Kembang Tanjong' },
+                        { id: '3', name: 'Boyhaki', email: 'boyhaki@hotmail.com', phone: '0867656667', address: 'Desa Baroh' },
+                        { id: '4', name: 'Zulkifli', email: 'zulkifli@ymail.com', phone: '0867656666', address: 'Desa Beureuleung' },
+                        { id: '5', name: 'Nurjannah', email: 'nurjannah@gmail.com', phone: '0867656669', address: 'Seulimum' }
+                    ]
                 },
                 save: function () {
-                    var id = this.input._id
+                    var id = this.input.id
                     var nm = this.input.name
                     var em = this.input.email
                     var pn = this.input.phone
                     var ad = this.input.address
                     
-                    db.put({
-                        _id: id,
-                        name: nm,
-                        email: em,
-                        phone: pn,
-                        address: ad
-                    }).then(function(response){
-                        
-                    }).catch(function(error){
-                        console.log(error)
-                    })
-                    
-                    this.items.push({_id: id, name: nm, email: em, phone: pn, address: ad})
+                    this.items.push({id: id, name: nm, email: em, phone: pn, address: ad})
                     this.clear()
+                    
+                    this.localData()
                     
                     swal('Added', 'Berhasil tambah data', 'success')
                 },
                 clear: function () {
                     this.savebtn = true
                     this.updatebtn = false
-                    this.input._id = ''
+                    this.input.id = ''
                     this.input.name = ''
                     this.input.email = ''
                     this.input.phone = ''
@@ -148,7 +136,7 @@
                 edit: function (item) {
                     this.savebtn = false
                     this.updatebtn = true
-                    this.input._id = item._id
+                    this.input.id = item.id
                     this.input.name = item.name
                     this.input.email = item.email
                     this.input.phone = item.phone
@@ -157,28 +145,9 @@
                 update: function (id) {
                     var myid = id - 1
                     Object.assign(this.items[myid], this.input)
-                    
-                    var nm = this.input.name
-                    var em = this.input.email
-                    var pn = this.input.phone
-                    var ad = this.input.address
-                    
-                    db.get(id).then(function(doc){
-                        return db.put({
-                            _id: id,
-                            _rev: doc._rev,
-                            name: nm,
-                            email: em,
-                            phone: pn,
-                            address: ad
-                        })
-                    }).then(function(response){
-                        
-                    }).catch(function(error){
-                        console.log(error)
-                    })
-                    
                     this.clear()
+                    
+                    this.localData()
                     
                     swal('Updated', 'Berhasil mengubah data', 'warning')
                 },
@@ -193,13 +162,7 @@
                     }).then((willDelete) => {
                         if(willDelete){
                             this.items.splice(del, 1)
-                            db.get(item._id).then(function(doc){
-                                return db.remove(doc)
-                            }).then(function(response){
-                                
-                            }).catch(function(error){
-                                console.log(error)
-                            })
+                            this.localData()
                         } else{
                             
                         }
