@@ -15,85 +15,27 @@
     
     <div id="app">
         <div class="container">
-            <p><br/></p>
             <h1>{{ title }}</h1>
+            <p>
+                <input type="file" id="file" @change="upload"/>
+            </p>
             <div class="row">
-                <div class="col-md-8">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th width="130">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="item in items" v-bind:key="item._id">
-                                <td>{{ item._id }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.email }}</td>
-                                <td>{{ item.phone }}</td>
-                                <td>{{ item.address }}</td>
-                                <td class="text-center">
-                                    <button @click="edit(item)" class="btn btn-warning btn-sm">Edit</button>
-                                    <button @click="destroy(item)" class="btn btn-danger btn-sm">Trash</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <form>
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" v-model="input._id" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" v-model="input.name" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" v-model="input.email" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="tel" v-model="input.phone" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" v-model="input.address"></textarea>
-                        </div>
-                        <button v-if="savebtn" @click.prevent="save" class="btn btn-primary">Save</button>
-                        <button v-if="updatebtn" @click.prevent="update(input._id)" class="btn btn-warning">Update</button>
-                        <button @click.prevent="clear" class="btn btn-info">Clear</button>
-                    </form>
-                    <p><br/></p>
+                <div v-for="item in items" :key="item._id" class="col-md-3">
+                    <img :src="'data:'+item._attachments.filename.content_type+';charset=utf-8;base64,'+item._attachments.filename.data" width="100%"/>
+                    <p class="text-center"><button @click="destroy(item)" class="btn btn-danger">Delete</button></p>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
-        window.db = new PouchDB('test');
+        window.db = new PouchDB('test')
         
         var app = new Vue({
             el: '#app',
             data: {
-                title: 'CRUD Vue.js',
-                items : [],
-                input: {
-                    _id: '',
-                    name: '',
-                    email: '',
-                    phone: '',
-                    address: ''
-                },
-                savebtn: true,
-                updatebtn: false
+                title: 'Upload PouchDB and Vue.js',
+                items: []
             },
             created: function () {
                 this.view()
@@ -102,7 +44,8 @@
                 view: function () {
                     let vm = this
                     db.allDocs({
-                        include_docs: true
+                        include_docs: true,
+                        attachments: true
                     }).then(function(response){
                         for(var i = 0; i < response.rows.length; i++){
                             vm.items.push(response.rows[i].doc)
@@ -112,75 +55,22 @@
                         console.log(error)
                     })
                 },
-                save: function () {
-                    var id = this.input._id
-                    var nm = this.input.name
-                    var em = this.input.email
-                    var pn = this.input.phone
-                    var ad = this.input.address
+                upload: function () {
+                    let input = document.getElementById('file')
+                    let file = input.files[0]
                     
-                    db.put({
-                        _id: id,
-                        name: nm,
-                        email: em,
-                        phone: pn,
-                        address: ad
+                    db.post({
+                        _attachments: {
+                            filename: {
+                                content_type: file.type,
+                                data: file
+                            }
+                        }
                     }).then(function(response){
-                        
+                        window.location.reload()
                     }).catch(function(error){
                         console.log(error)
                     })
-                    
-                    this.items.push({_id: id, name: nm, email: em, phone: pn, address: ad})
-                    this.clear()
-                    
-                    swal('Added', 'Berhasil tambah data', 'success')
-                },
-                clear: function () {
-                    this.savebtn = true
-                    this.updatebtn = false
-                    this.input._id = ''
-                    this.input.name = ''
-                    this.input.email = ''
-                    this.input.phone = ''
-                    this.input.address = ''
-                },
-                edit: function (item) {
-                    this.savebtn = false
-                    this.updatebtn = true
-                    this.input._id = item._id
-                    this.input.name = item.name
-                    this.input.email = item.email
-                    this.input.phone = item.phone
-                    this.input.address = item.address
-                },
-                update: function (id) {
-                    var myid = id - 1
-                    Object.assign(this.items[myid], this.input)
-                    
-                    var nm = this.input.name
-                    var em = this.input.email
-                    var pn = this.input.phone
-                    var ad = this.input.address
-                    
-                    db.get(id).then(function(doc){
-                        return db.put({
-                            _id: id,
-                            _rev: doc._rev,
-                            name: nm,
-                            email: em,
-                            phone: pn,
-                            address: ad
-                        })
-                    }).then(function(response){
-                        
-                    }).catch(function(error){
-                        console.log(error)
-                    })
-                    
-                    this.clear()
-                    
-                    swal('Updated', 'Berhasil mengubah data', 'warning')
                 },
                 destroy: function (item) {
                     var del = this.items.indexOf(item)

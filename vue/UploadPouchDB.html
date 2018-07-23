@@ -21,10 +21,8 @@
             </p>
             <div class="row">
                 <div v-for="item in items" :key="item._id" class="col-md-3">
-                    <img :src="'data:'+item._attachments.filename.content_type+';charset:utf-8;base64,'+item._attachments.filename.data" width="100%"/>
-                    <p class="text-center">
-                        <button @click="destroy(item)" class="btn btn-danger">Delete</button>
-                    </p>
+                    <img :src="'data:'+item._attachments.filename.content_type+';charset=utf-8;base64,'+item._attachments.filename.data" width="100%"/>
+                    <p class="text-center"><button @click="destroy(item)" class="btn btn-danger">Delete</button></p>
                 </div>
             </div>
         </div>
@@ -69,6 +67,8 @@
                             }
                         }
                     }).then(function(response){
+                        input.value = ""
+                        swal('Added', 'Berhasil tambah gambar baru', 'success')
                         window.location.reload()
                     }).catch(function(error){
                         console.log(error)
