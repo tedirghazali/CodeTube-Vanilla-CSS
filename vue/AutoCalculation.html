@@ -49,7 +49,7 @@
                             <tr>
                                 <td colspan="5">Tax</td>
                                 <td>
-                                    <select class="form-control" v-model="tax">
+                                    <select v-model="tax" class="form-control">
                                         <option value=".06">CT Tax</option>
                                         <option value=".00">Tax Free</option>
                                     </select>
@@ -75,13 +75,13 @@
                         </div>
                         <div class="form-group">
                             <label>Product Quantity</label>
-                            <input type="number" class="form-control" v-model="product.qty"/>
+                            <input type="text" class="form-control" v-model="product.qty"/>
                         </div>
                         <div class="form-group">
                             <label>Product Price</label>
-                            <input type="number" class="form-control" v-model="product.price"/>
+                            <input type="text" class="form-control" v-model="product.price"/>
                         </div>
-                        <button @click.prevent="addToCart" class="btn btn-primary">Add To Cart</button>
+                        <button class="btn btn-primary" @click.prevent="addToCart">Add To Cart</button>
                     </form>
                 </div>
             </div>
@@ -101,8 +101,8 @@
                 product: {
                     id: '',
                     name: '',
-                    qty: 0,
-                    price: 0
+                    qty: '',
+                    price: ''
                 },
                 tax: ".00"
             },
@@ -110,7 +110,7 @@
                 subtotal: function () {
                     return this.products.reduce((total, item) => {
                         return total + item.qty * item.price
-                    }, 0)
+                    }, 0);
                 },
                 taxtotal: function () {
                     return this.subtotal * this.tax

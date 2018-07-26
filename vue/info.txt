@@ -16,21 +16,73 @@
         <div class="container">
             <h1>{{ title }}</h1>
             <div class="row">
-                <div class="col-md-5">
-                    <select size="30" id="list1" class="form-control" multiple>
-                        <option v-for="item1 in list1">{{ item1 }}</option>
-                    </select>
+                <div class="col-md-8">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">ID</th>
+                                <th>Name</th>
+                                <th colspan="2">Quantity</th>
+                                <th>Price</th>
+                                <th>Item Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="pro in products" :key="pro.id">
+                                <td>
+                                    <button @click="removeCart(pro)" class="btn btn-danger btn-sm">&times;</button>
+                                </td>
+                                <td>{{ pro.id }}</td>
+                                <td>{{ pro.name }}</td>
+                                <td>{{ pro.qty }}</td>
+                                <td>
+                                    <button @click="addQty(pro)" class="btn btn-success btn-sm">+</button>
+                                    <button @click="removeQty(pro)" class="btn btn-danger btn-sm">-</button>
+                                </td>
+                                <td>$ {{ pro.price }}</td>
+                                <td>$ {{ itemtotal(pro) }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">Sub Total</td>
+                                <td>$ {{ subtotal }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">Tax</td>
+                                <td>
+                                    <select v-model="tax" class="form-control">
+                                        <option value=".06">CT Tax</option>
+                                        <option value=".00">Tax Free</option>
+                                    </select>
+                                </td>
+                                <td>$ {{ taxtotal }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">Total</td>
+                                <td>$ {{ grandtotal }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-md-1">
-                    <button class="btn btn-primary mb-2 btn-block" @click="allToRight">&raquo;</button>
-                    <button class="btn btn-primary mb-2 btn-block" @click="oneToRight">&rsaquo;</button>
-                    <button class="btn btn-primary mb-2 btn-block" @click="oneToLeft">&lsaquo;</button>
-                    <button class="btn btn-primary mb-2 btn-block" @click="allToLeft">&laquo;</button>
-                </div>
-                <div class="col-md-5">
-                    <select size="30" id="list2" class="form-control" multiple>
-                        <option v-for="item2 in list2">{{ item2 }}</option>
-                    </select>
+                <div class="col-md-4">
+                    <form>
+                        <div class="form-group">
+                            <label>Product ID</label>
+                            <input type="text" class="form-control" v-model="product.id"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" class="form-control" v-model="product.name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Quantity</label>
+                            <input type="text" class="form-control" v-model="product.qty"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Price</label>
+                            <input type="text" class="form-control" v-model="product.price"/>
+                        </div>
+                        <button class="btn btn-primary" @click.prevent="addToCart">Add To Cart</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -40,40 +92,65 @@
         var app = new Vue({
             el: '#app',
             data: {
-                title: 'Dual List Vue.js',
-                list1: [ 'Tedir', 'Ghazali', 'Alexander', 'Murad', 'Bukhari', 'Boyhaki', 'Nurjannah', 'Fatma', 'Bakri' ],
-                list2: [ 'Razali', 'Rizal' ]
+                title: 'Auto Calculation Vue.js',
+                products: [
+                    { id: 1, name: 'Baju', qty: 3, price: 9 },
+                    { id: 2, name: 'Celana', qty: 2, price: 13 },
+                    { id: 3, name: 'Sepatu', qty: 5, price: 22.5 }
+                ],
+                product: {
+                    id: '',
+                    name: '',
+                    qty: '',
+                    price: ''
+                },
+                tax: ".00"
+            },
+            computed: {
+                subtotal: function () {
+                    return this.products.reduce((total, item) => {
+                        return total + item.qty * item.price
+                    }, 0);
+                },
+                taxtotal: function () {
+                    return this.subtotal * this.tax
+                },
+                grandtotal: function () {
+                    return this.subtotal + this.taxtotal
+                }
             },
             methods: {
-                oneToRight: function () {
-                    var select1 = document.getElementById('list1').value
-                    if(select1 != ""){
-                        this.list2.push(select1)
-                        var del = this.list1.indexOf(select1)
-                        this.list1.splice(del, 1)
-                    }
+                addToCart: function () {
+                    var id = this.product.id
+                    var name = this.product.name
+                    var qty = this.product.qty
+                    var price = this.product.price
+                    
+                    this.products.push({ id: id, name: name, qty: qty, price: price })
+                    this.clearCart()
                 },
-                oneToLeft: function () {
-                    var select2 = document.getElementById('list2').value
-                    if(select2 != ""){
-                        this.list1.push(select2)
-                        var del = this.list2.indexOf(select2)
-                        this.list2.splice(del, 1)
-                    }
+                removeCart: function (item) {
+                    var del = this.products.indexOf(item)
+                    this.products.splice(del, 1)
                 },
-                allToRight: function () {
-                    for(var i = 0; i < this.list1.length; i++){
-                        this.list2.push(this.list1[i])
-                        var del = this.list1.indexOf(this.list1[i])
-                        this.list1.splice(del, 1)
-                    }
+                addQty: function (item) {
+                    Object.assign(item, {
+                        qty: item.qty + 1
+                    })
                 },
-                allToLeft: function () {
-                    for(var i = 0; i < this.list2.length; i++){
-                        this.list1.push(this.list2[i])
-                        var del = this.list2.indexOf(this.list2[i])
-                        this.list2.splice(del, 1)
-                    }
+                removeQty: function (item) {
+                    Object.assign(item, {
+                        qty: item.qty - 1
+                    })
+                },
+                clearCart: function () {
+                    this.product.id = ''
+                    this.product.name = ''
+                    this.product.qty = ''
+                    this.product.price = ''
+                },
+                itemtotal: function (item) {
+                    return item.qty * item.price
                 }
             }
         })
