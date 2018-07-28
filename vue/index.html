@@ -4,12 +4,9 @@
     <meta charset="utf-8"/>
     <title>Vue.js Tutorial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.css" rel="stylesheet"/>
-    <style>
-    
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjs@5.0.4/dist/math.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"></script>
 </head>
 <body style="background: #eee">
     
@@ -17,169 +14,12 @@
         <div class="container">
             <h1>{{ title }}</h1>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card card-body">
-                        <div class="form-group">
-                            <input type="text" v-model="result" class="form-control form-control-lg" style="text-align: right"/>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button @click="clear" class="btn btn-warning btn-block mb-2">C</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="unique('/100')" class="btn btn-info btn-block mb-2">%</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="math('/')" class="btn btn-danger btn-block mb-2">&divide;</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(7)" class="btn btn-primary btn-block mb-2">7</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(8)" class="btn btn-primary btn-block mb-2">8</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(9)" class="btn btn-primary btn-block mb-2">9</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="math('*')" class="btn btn-danger btn-block mb-2">&times;</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(4)" class="btn btn-primary btn-block mb-2">4</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(5)" class="btn btn-primary btn-block mb-2">5</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(6)" class="btn btn-primary btn-block mb-2">6</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="math('-')" class="btn btn-danger btn-block mb-2">&minus;</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(1)" class="btn btn-primary btn-block mb-2">1</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(2)" class="btn btn-primary btn-block mb-2">2</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="number(3)" class="btn btn-primary btn-block mb-2">3</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="math('+')" class="btn btn-danger btn-block mb-2">&plus;</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button @click="number(0)" class="btn btn-primary btn-block mb-2">0</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="unique('.')" class="btn btn-info btn-block mb-2">.</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button @click="equal" class="btn btn-danger btn-block mb-2">&equals;</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6">
+                    <textarea v-model="editor" rows="17" class="form-control"></textarea>
+                    <button @click="submit" class="btn btn-primary mt-2">Submit</button>
                 </div>
-                <div class="col-md-4">
-                    <div class="card card-body" style="height: 336px; overflow-y: scroll">
-                        <div class="list-group" v-for="item in items">
-                            <div class="list-group-item">{{ item.total }}<br/><small>{{ item.math }}</small></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card card-body mt-4">
-                <div class="row">
-                    <div class="col-md-2">
-                        <button @click="unique('(')" class="btn btn-warning btn-block mb-2">(</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique(')')" class="btn btn-warning btn-block mb-2">)</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique(',')" class="btn btn-info btn-block mb-2">,</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('sin')" class="btn btn-success btn-block mb-2">sin</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('sinh')" class="btn btn-success btn-block mb-2">sinh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('asin')" class="btn btn-success btn-block mb-2">asin</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('asinh')" class="btn btn-success btn-block mb-2">asinh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('cos')" class="btn btn-success btn-block mb-2">cos</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('cosh')" class="btn btn-success btn-block mb-2">cosh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('acos')" class="btn btn-success btn-block mb-2">acos</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('acosh')" class="btn btn-success btn-block mb-2">acosh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('tan')" class="btn btn-success btn-block mb-2">tan</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('tanh')" class="btn btn-success btn-block mb-2">tanh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('atan')" class="btn btn-success btn-block mb-2">atan</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('atanh')" class="btn btn-success btn-block mb-2">atanh</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('atan2')" class="btn btn-success btn-block mb-2">atan2</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('pi')" class="btn btn-info btn-block mb-2">π</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique('!')" class="btn btn-info btn-block mb-2">X!</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique('^2')" class="btn btn-info btn-block mb-2">X<sup>2</sup></button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique('^3')" class="btn btn-info btn-block mb-2">X<sup>3</sup></button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="unique('^')" class="btn btn-info btn-block mb-2">X<sup>y</sup></button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('sqrt')" class="btn btn-info btn-block mb-2">√X</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('nthRoot')" class="btn btn-info btn-block mb-2"><sup>x</sup>√Y</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('e')" class="btn btn-info btn-block mb-2">e</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('exp')" class="btn btn-info btn-block mb-2">e<sup>x</sup></button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('expm1')" class="btn btn-info btn-block mb-2">e<sup>x</sup>-1</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('log')" class="btn btn-info btn-block mb-2">log</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('log1p')" class="btn btn-info btn-block mb-2">log1p</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('log2')" class="btn btn-info btn-block mb-2">log2</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button @click="trigonometric('log10')" class="btn btn-info btn-block mb-2">log10</button>
-                    </div>
+                <div class="col-md-6">
+                    <div id="markdown"></div>
                 </div>
             </div>
         </div>
@@ -189,79 +29,14 @@
         var app = new Vue({
             el: '#app',
             data: {
-                title: 'Math Calculator Vue.js',
-                result: "",
-                items: []
+                title: 'Markdown Viewer Vue.js',
+                editor: ''
             },
             methods: {
-                number: function (item) {
-                    this.result += item
-                },
-                math: function (item) {
-                    this.result += item.toString()
-                },
-                unique: function (item) {
-                    this.result += item.toString()
-                },
-                equal: function () {
-                    var result = this.result
-                    var total = math.eval(result)
-                    this.items.push({ math: result, total: total })
-                    this.result = total
-                },
-                clear: function () {
-                    this.result = ""
-                },
-                trigonometric: function (item) {
-                    var value = '';
-                    if(item == 'sin'){
-                        value = 'sin('+this.result+' deg)'
-                    } else if(item == 'cos'){
-                        value = 'cos('+this.result+' deg)'
-                    } else if(item == 'tan'){
-                        value = 'tan('+this.result+' deg)'
-                    } else if(item == 'sinh'){
-                        value = 'sinh('+this.result+' deg)'
-                    } else if(item == 'cosh'){
-                        value = 'cosh('+this.result+' deg)'
-                    } else if(item == 'tanh'){
-                        value = 'tanh('+this.result+' deg)'
-                    } else if(item == 'asin'){
-                        value = 'asin('+this.result+')'
-                    } else if(item == 'asinh'){
-                        value = 'asinh('+this.result+')'
-                    } else if(item == 'acos'){
-                        value = 'acos('+this.result+')'
-                    } else if(item == 'acosh'){
-                        value = 'acosh('+this.result+')'
-                    } else if(item == 'atan'){
-                        value = 'atan('+this.result+')'
-                    } else if(item == 'atanh'){
-                        value = 'atanh('+this.result+')'
-                    } else if(item == 'atan2'){
-                        value = 'atan2('+this.result+')'
-                    } else if(item == 'log'){
-                        value = 'log('+this.result+')'
-                    } else if(item == 'log1p'){
-                        value = 'log1p('+this.result+')'
-                    } else if(item == 'log2'){
-                        value = 'log2('+this.result+')'
-                    } else if(item == 'log10'){
-                        value = 'log10('+this.result+')'
-                    } else if(item == 'exp'){
-                        value = 'exp('+this.result+')'
-                    } else if(item == 'expm1'){
-                        value = 'expm1('+this.result+')'
-                    } else if(item == 'pi'){
-                        value = 'pi * '+this.result
-                    } else if(item == 'e'){
-                        value = 'e * '+this.result
-                    } else if(item == 'sqrt'){
-                        value = 'sqrt('+this.result+')'
-                    } else if(item == 'nthRoot'){
-                        value = 'nthRoot('+this.result+')'
-                    }
-                    this.result = value
+                submit: function () {
+                    var md = window.markdownit()
+                    var result = md.render(this.editor)
+                    document.getElementById('markdown').innerHTML = result
                 }
             }
         })
