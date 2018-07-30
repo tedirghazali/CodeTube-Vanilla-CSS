@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>File Uploader Preview</title>
+    <link href="uploader-preview.css" rel="stylesheet"/>
+    <style>
+        .container{
+            width: 1024px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="cf" data-upload-id="customFile">
+            <label>Upload File <a href="javascript:void(0)" class="cf-image-clear" title="Clear Image">x</a></label>
+            <label class="cf-custom-file" >
+                <input type="file" class="cf-input" accept="*" multiple>
+                <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                <span class="cf-control"></span>
+            </label>
+            <div class="cf-image-preview"></div>
+        </div>
+    </div>
+
+    <script src="uploader-preview.js"></script>
+    <script>
+        new uploaderPreview('customFile', true)
+    </script>
+</body>
+</html>

@@ -4,24 +4,20 @@
     <meta charset="utf-8"/>
     <title>Vue.js Tutorial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.7/lib/sortable.js"></script>
 </head>
 <body style="background: #eee">
     
     <div id="app">
         <div class="container">
             <h1>{{ title }}</h1>
-            <div class="row">
-                <div class="col-md-6">
-                    <textarea v-model="editor" rows="17" class="form-control"></textarea>
-                    <button @click="submit" class="btn btn-primary mt-2">Submit</button>
-                </div>
-                <div class="col-md-6">
-                    <div id="markdown"></div>
-                </div>
-            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    
+                </li>
+            </ul>
         </div>
     </div>
     
@@ -29,14 +25,23 @@
         var app = new Vue({
             el: '#app',
             data: {
-                title: 'Markdown Viewer Vue.js',
-                editor: ''
+                title: 'Sortable List Vue.js',
+                items: [
+                    { id: 1, name: 'Item One', index: 1, draggable: true },
+                    { id: 2, name: 'Item Two', index: 2, draggable: true },
+                    { id: 3, name: 'Item Three', index: 3, draggable: true },
+                    { id: 4, name: 'Item Four', index: 4, draggable: true },
+                    { id: 5, name: 'Item Five', index: 5, draggable: false },
+                    { id: 6, name: 'Item Six', index: 6, draggable: true },
+                    { id: 7, name: 'Item Seven', index: 7, draggable: true }
+                ]
+            },
+            created: function () {
+                this.view()
             },
             methods: {
-                submit: function () {
-                    var md = window.markdownit()
-                    var result = md.render(this.editor)
-                    document.getElementById('markdown').innerHTML = result
+                view: function () {
+                    
                 }
             }
         })
