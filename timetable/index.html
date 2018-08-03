@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Timetable</title>
+    <link href="css/timetablejs.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+    
+    <div class="timetable"></div>
+    
+    <script src="js/timetable.js"></script>
+    <script>
+        var timetable = new Timetable()
+        timetable.setScope(9,3)
+        timetable.addLocations(['Jakarta', 'Bandung', 'Surabaya', 'Palembang', 'Pekan Baru', 'Medan', 'Makassar'])
+        timetable.addEvent('Lomba lari', 'Jakarta', new Date(2018,8,2,9,00), new Date(2018,8,2,10,30), { url: '#'})
+        timetable.addEvent('Lomba makan', 'Jakarta', new Date(2018,8,2,13,00), new Date(2018,8,2,16,30), { url: '#'})
+        timetable.addEvent('Lomba makan', 'Bandung', new Date(2018,8,2,11,00), new Date(2018,8,2,13,45), { class: 'vip-only'})
+        timetable.addEvent('Sarapan', 'Surabaya', new Date(2018,8,2,11,00), new Date(2018,8,2,20,30), { url: '#'})
+        timetable.addEvent('Balapan Kuda', 'Palembang', new Date(2018,8,2,13,00), new Date(2018,8,2,17,30), { url: '#'})
+        timetable.addEvent('Lomba naik', 'Medan', new Date(2018,8,2,14,20), new Date(2018,8,2,50,30), { url: '#'})
+        timetable.addEvent('Lomba larikencang', 'Pekan Baru', new Date(2018,8,2,15,00), new Date(2018,8,2,17,30), { url: '#'})
+        timetable.addEvent('Lomba marathon', 'Makassar', new Date(2018,8,2,9,00), new Date(2018,8,2,15,30), { onClick: function(event) { window.alert('Lomba marathon') }})
+        
+        var renderer = new Timetable.Renderer(timetable)
+        renderer.draw('.timetable')
+    </script>
+</body>
+</html>

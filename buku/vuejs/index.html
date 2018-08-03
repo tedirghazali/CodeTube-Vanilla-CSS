@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Vue.js Tutorial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <div class="container">
+            <komponen-kepala title="Komponen dan Props Vue.js" subtitle="Tedir Ghazali"></komponen-kepala>
+            <ul class="list-group">
+              <komponen-item v-for="buah in buahan" :item="buah" :key="buah.id"></komponen-item>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        Vue.component('komponen-kepala', {
+          props: ['title', 'subtitle'],
+          template: `<h1>{{ title }}<br/><small>{{ subtitle }}</small></h1>`
+        })
+        Vue.component('komponen-item', {
+          props: ['item'],
+          template: `<li class="list-group-item">{{ item.text }}</li></div>`
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+              buahan: [
+                { id: 0, text: 'Pisang'},
+                { id: 1, text: 'Jeruk'},
+                { id: 2, text: 'Delima'},
+                { id: 3, text: 'Mangga'},
+                { id: 4, text: 'Durian'},
+                { id: 5, text: 'Nanas'},
+                { id: 6, text: 'Markisah'}
+              ]
+            }
+        })
+    </script>
+</body>
+</html>

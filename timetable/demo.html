@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Timetable Demo</title>
+    <link rel="stylesheet" href="css/timetablejs.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div class="timetable"></div>
+
+    <script src="js/timetable.js"></script>
+
+    <script>
+      var timetable = new Timetable();
+
+      timetable.setScope(9,3)
+
+      timetable.addLocations(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']);
+
+      timetable.addEvent('Sightseeing', 'Senin', new Date(2018,8,2,9,00), new Date(2018,8,2,11,30), { url: '#' });
+      timetable.addEvent('Zumba', 'Selasa', new Date(2018,8,2,12), new Date(2018,8,2,13), { url: '#' });
+      timetable.addEvent('Zumbu', 'Selasa', new Date(2018,8,2,13,30), new Date(2018,8,2,15), { url: '#' });
+      timetable.addEvent('Lasergaming', 'Rabu', new Date(2018,8,2,17,45), new Date(2018,8,2,19,30), { class: 'vip-only', data: { maxPlayers: 14, gameType: 'Capture the flag' } });
+      timetable.addEvent('All-you-can-eat grill', 'Kamis', new Date(2018,8,2,21), new Date(2018,8,3,1,30), { url: '#' });
+      timetable.addEvent('Hackathon', 'Jumat', new Date(2018,8,2,11,30), new Date(2018,8,2,20)); // options attribute is not used for this event
+      timetable.addEvent('Tokyo Hackathon Livestream', 'Sabtu', new Date(2018,8,2,12,30), new Date(2018,8,2,16,15)); // options attribute is not used for this event
+      timetable.addEvent('Lunch', 'Minggu', new Date(2018,8,2,9,30), new Date(2018,8,2,11,45), { onClick: function(event) {
+        window.alert('You clicked on the ' + event.name + ' event in ' + event.location + '. This is an example of a click handler');
+      }});
+      timetable.addEvent('Cocktails', 'Senin', new Date(2018,8,3,00,00), new Date(2018,8,3,02,00), { class: 'vip-only' });
+
+      var renderer = new Timetable.Renderer(timetable);
+      renderer.draw('.timetable');
+    </script>
+
+    
+</body>
+</html>
