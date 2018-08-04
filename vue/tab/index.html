@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Tabs Vue.js</title>
+    <link href="bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        .card{
+            width: 600px;
+            margin: 20px auto;
+        }
+        .nav-link{
+            cursor: pointer
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <div class="card card-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><span class="nav-link" id="tab1btn" @click="tab1btn">Tab 1</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab2btn" @click="tab2btn">Tab 2</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab3btn" @click="tab3btn">Tab 3</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab4btn" @click="tab4btn">Tab 4</span></li>
+            </ul>
+            <div v-if="tab1" class="mt-2">
+                <p>This is a content of tab 1 one</p>
+            </div>
+            <div v-if="tab2" class="mt-2">
+                <p>This is a content of tab 2 two</p>
+            </div>
+            <div v-if="tab3" class="mt-2">
+                <p>This is a content of tab 3 three</p>
+            </div>
+            <div v-if="tab4" class="mt-2">
+                <p>This is a content of tab 4 four</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="vue.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                tab1: true,
+                tab2: false,
+                tab3: false,
+                tab4: false
+            },
+            created: function () {
+                this.tab2btn()
+            },
+            methods: {
+                tab1btn: function () {
+                    $('#tab1btn').addClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = true
+                    this.tab2 = false
+                    this.tab3 = false
+                    this.tab4 = false
+                },
+                tab2btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').addClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = false
+                    this.tab2 = true
+                    this.tab3 = false
+                    this.tab4 = false
+                },
+                tab3btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').addClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = false
+                    this.tab2 = false
+                    this.tab3 = true
+                    this.tab4 = false
+                },
+                tab4btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').addClass('active')
+                    this.tab1 = false
+                    this.tab2 = false
+                    this.tab3 = true
+                    this.tab4 = false
+                }
+            }
+        })
+    </script>
+</body>
+</html>

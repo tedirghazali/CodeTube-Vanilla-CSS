@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Tabs Vue.js</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.css" rel="stylesheet"/>
+    <style>
+        .card{
+            width:600px;
+            margin:20px auto;
+        }
+        .nav-link{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <div class="card card-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><span class="nav-link" id="tab1btn" @click="tab1btn">Tab 1</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab2btn" @click="tab2btn">Tab 2</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab3btn" @click="tab3btn">Tab 3</span></li>
+                <li class="nav-item"><span class="nav-link" id="tab4btn" @click="tab4btn">Tab 4</span></li>
+            </ul>
+            <div v-if="tab1" class="mt-2">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin efficitur sagittis ipsum, in sodales nisl finibus id. Cras imperdiet vitae turpis vel blandit. Maecenas tempus, lorem in mattis bibendum, lorem massa porta nisi, vitae iaculis justo neque sit amet enim. Ut sit amet urna mauris. Aliquam aliquam nulla in fermentum molestie. Fusce quis eleifend lorem. Curabitur sit amet congue est, ut pellentesque quam. Integer varius rutrum tellus in feugiat. Donec hendrerit ultricies nulla sed maximus. Aliquam pellentesque enim erat, eu fermentum erat fringilla a. Maecenas et eros nunc. </p>
+            </div>
+            <div v-if="tab2" class="mt-2">
+                <p>Maecenas sed nulla nulla. Vivamus vulputate nibh sed condimentum egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras bibendum pharetra orci, vel tempor enim rhoncus vel. Vivamus rhoncus bibendum tellus vel posuere. Aenean at neque vel libero vulputate ornare. Nunc neque erat, pretium ut scelerisque non, egestas et urna. Vestibulum et nisl eleifend, ultrices quam at, maximus ante. </p>
+            </div>
+            <div v-if="tab3" class="mt-2">
+                <p>Pellentesque volutpat magna nec quam feugiat ultrices. Nulla facilisi. Fusce vitae lacinia magna, a vestibulum ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris pretium lorem neque, consectetur mollis ligula placerat vitae. Integer fermentum finibus nisl, vitae malesuada libero dapibus vel. Donec mattis vitae quam ut viverra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam arcu turpis, suscipit sit amet aliquet ultricies, mollis in metus. Ut ut augue a turpis malesuada efficitur. Vivamus ac purus nec enim dignissim feugiat a id nunc. Pellentesque eu dictum felis, in consequat orci. Suspendisse potenti. Pellentesque finibus mauris sit amet porta ultrices. Fusce massa sapien, malesuada at sem aliquam, iaculis sagittis eros. </p>
+            </div>
+            <div v-if="tab4" class="mt-2">
+                <p>Suspendisse venenatis libero orci, nec interdum diam placerat et. Cras et odio vel nibh bibendum tempor. Phasellus interdum, felis in posuere suscipit, tellus erat molestie justo, vel convallis nisi orci at sapien. Vivamus blandit finibus sapien. Curabitur tempor sagittis posuere. Morbi volutpat urna et gravida aliquam. Donec ornare enim quis consectetur tincidunt. Ut dignissim velit ligula, a varius urna imperdiet ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec eu nibh consectetur, tristique erat nec, finibus mauris. Aliquam vel dolor ac arcu pulvinar ultrices non ut sapien. Mauris mollis molestie libero ac sagittis. Duis auctor rutrum nisi et suscipit. Vestibulum lobortis metus eu placerat scelerisque. Etiam scelerisque finibus egestas. Vestibulum felis ligula, porttitor aliquam aliquam sed, fermentum sit amet ante. </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                tab1: true,
+                tab2: false,
+                tab3: false,
+                tab4: false
+            },
+            created: function () {
+                this.tab2btn()
+            },
+            methods: {
+                tab1btn: function () {
+                    $('#tab1btn').addClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = true
+                    this.tab2 = false
+                    this.tab3 = false
+                    this.tab4 = false
+                },
+                tab2btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').addClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = false
+                    this.tab2 = true
+                    this.tab3 = false
+                    this.tab4 = false
+                },
+                tab3btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').addClass('active')
+                    $('#tab4btn').removeClass('active')
+                    this.tab1 = false
+                    this.tab2 = false
+                    this.tab3 = true
+                    this.tab4 = false
+                },
+                tab4btn: function () {
+                    $('#tab1btn').removeClass('active')
+                    $('#tab2btn').removeClass('active')
+                    $('#tab3btn').removeClass('active')
+                    $('#tab4btn').addClass('active')
+                    this.tab1 = false
+                    this.tab2 = false
+                    this.tab3 = false
+                    this.tab4 = true
+                }
+            }
+        })
+    </script>
+</body>
+</html>
