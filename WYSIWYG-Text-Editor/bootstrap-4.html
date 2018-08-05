@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>WYSIWYG Rich Text Editor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="editor.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    
+    <div class="container mb-2">
+        <h2 class="heading2-text">WYSIWYG Rich Text Editor</h2>
+        <textarea id="txtEditor"></textarea> 
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="editor.js"></script>
+	<script>
+        $(document).ready(function() {
+            $("#txtEditor").Editor();
+        });
+	</script>
+</body>
+</html>
