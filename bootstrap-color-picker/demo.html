@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Color Picker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="css/bootstrap-colorpicker.min.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card card-body">
+                    <div id="colorpicker" class="input-group">
+                        <input type="text" class="form-control" value="#FFFFFFFF"/>
+                        <div class="input-group-append">
+                            <div class="input-group-text colorpicker-input-addon"><i></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="jumbotron mt-2">
+                    <h1>Color Picker</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-colorpicker.min.js"></script>
+	<script>
+        $('#colorpicker').colorpicker()
+        $('#colorpicker').on('colorpickerChange', function(event){
+            $('body').css('background-color', event.color.toString())
+        })
+	</script>
+</body>
+</html>
