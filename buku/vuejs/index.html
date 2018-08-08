@@ -9,34 +9,36 @@
 <body>
 
     <div id="app">
-        <div class="container">
-            <komponen-kepala title="Komponen dan Props Vue.js" subtitle="Tedir Ghazali"></komponen-kepala>
-            <ul class="list-group">
-              <komponen-item v-for="buah in buahan" :item="buah" :key="buah.id"></komponen-item>
-            </ul>
-        </div>
+        <blog-post 
+            v-for="post in posts" 
+            v-bind:judul="post.judul" 
+            v-bind:tgl="post.tgl" 
+            v-bind:penulis="post.penulis" 
+            v-bind:konten="post.konten" 
+            v-bind:komentar="post.komentar" 
+            v-bind:key="post.id"
+        ></blog-post>
     </div>
 
     <script>
-        Vue.component('komponen-kepala', {
-          props: ['title', 'subtitle'],
-          template: `<h1>{{ title }}<br/><small>{{ subtitle }}</small></h1>`
-        })
-        Vue.component('komponen-item', {
-          props: ['item'],
-          template: `<li class="list-group-item">{{ item.text }}</li></div>`
+        Vue.component('blog-post', {
+            props: ['judul', 'tgl', 'penulis', 'konten', 'komentar'],
+            template: `
+                <div class="blog-post container">
+                    <h3>{{ judul }}</h3>
+                    <p>Post Tanggal {{ tgl }} oleh {{ penulis }}</p>
+                    <div v-html="konten"></div>
+                    <p>Komentar: {{ komentar }}</p>
+                </div>
+            `
         })
         var app = new Vue({
             el: '#app',
             data: {
-              buahan: [
-                { id: 0, text: 'Pisang'},
-                { id: 1, text: 'Jeruk'},
-                { id: 2, text: 'Delima'},
-                { id: 3, text: 'Mangga'},
-                { id: 4, text: 'Durian'},
-                { id: 5, text: 'Nanas'},
-                { id: 6, text: 'Markisah'}
+              posts: [
+                { id: 1, judul: 'Belajar web dasar', tgl: '07-08-2018', penulis: 'Tedir', komentar: '3', konten: `<p>Cara belajar web adalah dengan belajar <b>HTML</b>, kemudian belajar <b>CSS</b>, kemudian yang terakhir belajar <b>JavaScript</b></p>` },
+                { id: 2, judul: 'Belajar membuat web dinamis', tgl: '08-08-2018', penulis: 'Ghazali', komentar: '15', konten: `<p>Untuk membuat web dinamis <i>Anda</i> harus belajar menggunakan <b>PHP</b> dan <b>MySQL</p></p>` },
+                { id: 3, judul: 'Cara menggunakan frond-end javascript', tgl: '09-08-2018', penulis: 'Zulkifli', komentar: '32', konten: `<p>Anda 3 framework dalam penggunaan <u>Frond-End</u> yaitu <b>Vue.js</b>, <b>Angular JS/TS/Dart</b> dan <b>React.js</b></p>` }
               ]
             }
         })

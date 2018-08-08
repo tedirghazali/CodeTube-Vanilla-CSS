@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Folder View</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="metismenujs.min.css" rel="stylesheet"/>
+    <link href="mm-folder.css" rel="stylesheet"/>
+</head>
+<body>
+    
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="nav">
+                    <ul class="metisFolder metismenu">
+                        <li>
+                            <a href="#"><span class="fa fa-fw fa-folder-o"></span> Root</a>
+                            <ul>
+                                <li><a href="#"><span class="fa fa-fw fa-file"></span> File 1</a></li>
+                                <li>
+                                    <a href="#"><span class="fa fa-fw fa-folder-o"></span> Folder Office</a>
+                                    <ul>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-word-o text-primary"></span> File Word</a></li>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-excel-o text-success"></span> File Excel</a></li>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-powerpoint-o text-danger"></span> File PowerPoint</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="fa fa-fw fa-folder-o"></span> Folder Media</a>
+                                    <ul>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-image-o"></span> File Image</a></li>
+                                        <li>
+                                            <a href="#"><span class="fa fa-fw fa-folder-o"></span> Folder Plain</a>
+                                            <ul>
+                                                <li><a href="#"><span class="fa fa-fw fa-file-text-o"></span> File Text</a></li>
+                                                <li><a href="#"><span class="fa fa-fw fa-file-code-o"></span> File Code</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-audio-o"></span> File Audio</a></li>
+                                        <li><a href="#"><span class="fa fa-fw fa-file-video-o"></span> File Video</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><span class="fa fa-fw fa-file-o"></span> File 2</a></li>
+                                <li><a href="#"><span class="fa fa-fw fa-file-zip-o"></span> File Zip</a></li>
+                                <li><a href="#"><span class="fa fa-fw fa-file-pdf-o"></span> File PDF</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-9">
+                <h1>Folder View with jQuery or Vanilla JS</h1>
+                <p>How to create sidebar menu with jQuery or vanilla pure javascript</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="metismenujs.min.js"></script>
+    <script>
+        new MetisMenu(".metisFolder", {
+            toggle: false
+        })
+    </script>
+</body>
+</html>
